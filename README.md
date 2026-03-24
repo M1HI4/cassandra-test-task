@@ -61,9 +61,9 @@
 
 Это было необходимо для корректной работы macvlan.
 
-![VirtualBox](.assets\stand1.png)
-![VirtualBox_vm-a](.assets\satndvm-a.png)
-![VirtualBox_vm-b](.assets\standvm-b.png)
+![VirtualBox](assets/stand1.png)
+![VirtualBox_vm-a](assets/standvm-a.png)
+![VirtualBox_vm-b](assets/standvm-b.png)
 
 ## Развертывание кластера Cassandra
 
