@@ -1,0 +1,80 @@
+services:
+  cassandra-1:
+    build: .
+    image: local/cassandra-ssh:5.0
+    container_name: cassandra-1
+    hostname: cassandra-1
+    environment:
+      CASSANDRA_CLUSTER_NAME: "${CASSANDRA_CLUSTER_NAME:-TestCluster}"
+      CASSANDRA_LISTEN_ADDRESS: "${CASSANDRA_1_IP:-192.168.1.200}"
+      CASSANDRA_BROADCAST_ADDRESS: "${CASSANDRA_1_IP:-192.168.1.200}"
+      CASSANDRA_SEEDS: "${CASSANDRA_1_IP:-192.168.1.200},${CASSANDRA_2_IP:-192.168.1.201},${CASSANDRA_3_IP:-192.168.1.202}"
+      CASSANDRA_ENDPOINT_SNITCH: "GossipingPropertyFileSnitch"
+      MAX_HEAP_SIZE: "512M"
+      HEAP_NEWSIZE: "100M"
+    networks:
+      cassandra_lan:
+        ipv4_address: "${CASSANDRA_1_IP:-192.168.1.200}"
+    volumes:
+      - cassandra1-data:/var/lib/cassandra
+    restart: unless-stopped
+
+  cassandra-2:
+    build: .
+    image: local/cassandra-ssh:5.0
+    container_name: cassandra-2
+    hostname: cassandra-2
+    environment:
+      CASSANDRA_CLUSTER_NAME: "${CASSANDRA_CLUSTER_NAME:-TestCluster}"
+      CASSANDRA_LISTEN_ADDRESS: "${CASSANDRA_2_IP:-192.168.1.201}"
+      CASSANDRA_BROADCAST_ADDRESS: "${CASSANDRA_2_IP:-192.168.1.201}"
+      CASSANDRA_SEEDS: "${CASSANDRA_1_IP:-192.168.1.200},${CASSANDRA_2_IP:-192.168.1.201},${CASSANDRA_3_IP:-192.168.1.202}"
+      CASSANDRA_ENDPOINT_SNITCH: "GossipingPropertyFileSnitch"
+      MAX_HEAP_SIZE: "512M"
+      HEAP_NEWSIZE: "100M"
+    networks:
+      cassandra_lan:
+        ipv4_address: "${CASSANDRA_2_IP:-192.168.1.201}"
+    volumes:
+      - cassandra2-data:/var/lib/cassandra
+    depends_on:
+      - cassandra-1
+    restart: unless-stopped
+
+  cassandra-3:
+    build: .
+    image: local/cassandra-ssh:5.0
+    container_name: cassandra-3
+    hostname: cassandra-3
+    environment:
+      CASSANDRA_CLUSTER_NAME: "${CASSANDRA_CLUSTER_NAME:-TestCluster}"
+      CASSANDRA_LISTEN_ADDRESS: "${CASSANDRA_3_IP:-192.168.1.202}"
+      CASSANDRA_BROADCAST_ADDRESS: "${CASSANDRA_3_IP:-192.168.1.202}"
+      CASSANDRA_SEEDS: "${CASSANDRA_1_IP:-192.168.1.200},${CASSANDRA_2_IP:-192.168.1.201},${CASSANDRA_3_IP:-192.168.1.202}"
+      CASSANDRA_ENDPOINT_SNITCH: "GossipingPropertyFileSnitch"
+      MAX_HEAP_SIZE: "512M"
+      HEAP_NEWSIZE: "100M"
+    networks:
+      cassandra_lan:
+        ipv4_address: "${CASSANDRA_3_IP:-192.168.1.202}"
+    volumes:
+      - cassandra3-data:/var/lib/cassandra
+    depends_on:
+      - cassandra-1
+    restart: unless-stopped
+
+networks:
+  cassandra_lan:
+    driver: macvlan
+    driver_opts:
+      parent: "${PARENT_IFACE:-enp0s3}"
+    ipam:
+      config:
+        - subnet: "${SUBNET:-192.168.1.0/24}"
+          gateway: "${GATEWAY:-192.168.1.1}"
+          ip_range: "192.168.1.200/29"
+
+volumes:
+  cassandra1-data:
+  cassandra2-data:
+  cassandra3-data:

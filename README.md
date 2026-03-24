@@ -61,9 +61,9 @@
 
 Это было необходимо для корректной работы macvlan.
 
-![VirtualBox](assets\стенд1.png)
-![VirtualBox_vm-a](assets\стендvm-a.png)
-![VirtualBox_vm-b](assets\стендvm-b.png)
+![VirtualBox](assets\stand1.png)
+![VirtualBox_vm-a](assets\satndvm-a.png)
+![VirtualBox_vm-b](assets\standvm-b.png)
 
 ## Развертывание кластера Cassandra
 
@@ -87,13 +87,13 @@
 
 После запуска, на vm-a вывел статус кластера:
 
-![VirtualBox](assets\кластериз3-хинстансовCassandra.png)
+![VirtualBox](assets\status.png)
 
 Все узлы в состоянии UN.
 
 С vm-b проверил подключение к каждому узлу:
 
-![VirtualBox](assets\естьподключениечерезcqlshккаждомуузлусvm-b.png)
+![VirtualBox](assets\sqlsh.png)
 
 Внутри sqlsh выполнялись команды:
 `SHOW HOST;`
@@ -103,7 +103,7 @@
 
 Для доступа с vm-a к macvlan контейнеру был поднят host-side интерфейс, после чего можно было подключится по SSH:
 
-![VirtualBox](assets\сvm-aестьsshк192.168.1.200.1.png)
+![VirtualBox](assets\ssh-connect.png)
 
 SSH подключение выполнено успешно.
 
