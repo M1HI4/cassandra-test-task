@@ -87,13 +87,13 @@
 
 После запуска, на vm-a вывел статус кластера:
 
-![VirtualBox](assets\status.png)
+![VirtualBox](assets/status.png)
 
 Все узлы в состоянии UN.
 
 С vm-b проверил подключение к каждому узлу:
 
-![VirtualBox](assets\sqlsh.png)
+![VirtualBox](assets/sqlsh.png)
 
 Внутри sqlsh выполнялись команды:
 `SHOW HOST;`
@@ -103,7 +103,7 @@
 
 Для доступа с vm-a к macvlan контейнеру был поднят host-side интерфейс, после чего можно было подключится по SSH:
 
-![VirtualBox](assets\ssh-connect.png)
+![VirtualBox](assets/ssh-connect.png)
 
 SSH подключение выполнено успешно.
 
